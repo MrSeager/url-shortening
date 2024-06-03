@@ -24,6 +24,7 @@ const UrlShort = () => {
     const parentRef = useRef(null);
     const [longURL, setLongUrl] = useState("");
     const [shortLink, setShortLink] = useState({});
+    const [shortLinks, setShortLinks] = useState([]);
     const [active, setActive] = useState(false);
     const [copy, setCopy] = useState(false);
 
@@ -70,6 +71,7 @@ const UrlShort = () => {
                 setActive(true);
               });
           });
+        setShortLinks([...shortLinks, { longURL, shortLink: shortLink.link }]);
         setLongUrl("");
     };
 
@@ -115,15 +117,15 @@ const UrlShort = () => {
                     <Button type='submit' variant='custom' className='cs-w-2 rounded cs-btn text-white'>Shorten It!</Button>
                 </Form>
                 <Container ref={parentRef}>
-                    {active ? (
-                        <Container className='w-75 mx-auto rounded p-2 bg-white m-2 d-flex flex-row justify-content-between align-items-center'>
-                            <p className='m-0'>{longURL}</p>
-                            <p className='m-0 ms-auto'>{shortLink.link}</p>
-                            <CopyToClipboard text={shortLink.link} onCopy={() => {setCopy(true);}}>
+                    {shortLinks.map((link, index) => (
+                        <Container key={index} className='w-75 mx-auto rounded p-2 bg-white m-2 d-flex flex-row justify-content-between align-items-center'>
+                            <p className='m-0'>{link.longURL}</p>
+                            <p className='m-0 ms-auto cs-tc-2'>{link.shortLink}</p>
+                            <CopyToClipboard text={link.shortLink} onCopy={() => {setCopy(true);}}>
                                 <Button variant='custom' className='ms-3 px-3 rounded cs-btn text-white'>Copy</Button>
                             </CopyToClipboard>
                         </Container>
-                    ) : '' }
+                    ))}
                 </Container>
             </Container>
             <Container className='mt-5 mb-5'>

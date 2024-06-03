@@ -25,6 +25,10 @@ code {
   color: hsl(0, 0%, 75%) !important;
 }
 
+.cs-tc-2{
+  color: hsl(180, 66%, 49%) !important;
+}
+
 .cs-fw{
   font-weight: 700 !important;
 }
