@@ -27,6 +27,9 @@ const UrlShort = () => {
     const [shortLinks, setShortLinks] = useState([]);
     const [active, setActive] = useState(false);
     const [copy, setCopy] = useState(false);
+    const [isValidlink, setIsValidlink] = useState(false);
+    const [isCopied, setIsCopied] = useState(Array(shortLinks.length).fill(false));
+    const [copiedIndex, setCopiedIndex] = useState(-1);
 
     useEffect(() => {
         if (parentRef.current) {
@@ -34,46 +37,59 @@ const UrlShort = () => {
         }
     }, [parentRef]);
 
-    function handleChange(e) {
-        setLongUrl(e.target.value);
+    const handleChange = (e) => {
+        const inputValue = e.target.value;
+        const urlPattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+
+        setIsValidlink(urlPattern.test(inputValue));
+        setLongUrl(inputValue);
     };
     
     async function handleSubmit(e) {
         e.preventDefault();
-        await fetch("https://api-ssl.bitly.com/v4/shorten", {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_BITLY_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            long_url: longURL,
-            domain: "bit.ly",
-            group_guid: `${process.env.REACT_APP_GUID}`,
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            const new_link = data.link.replace("https://", "");
-            fetch(
-              `https://api-ssl.bitly.com/v4/bitlinks/${new_link}/qr?image_format=png`,
-              {
+        try {
+            const response = await fetch("https://api-ssl.bitly.com/v4/shorten", {
+                method: "POST",
                 mode: "cors",
                 headers: {
-                  Authorization: `Bearer ${process.env.REACT_APP_BITLY_TOKEN}`,
+                    Authorization: `Bearer ${process.env.REACT_APP_BITLY_TOKEN}`,
+                    "Content-Type": "application/json",
                 },
-              }
-            )
-              .then((response) => response.json())
-              .then((result) => {
-                setShortLink(result);
-                setActive(true);
-              });
-          });
-        setShortLinks([...shortLinks, { longURL, shortLink: shortLink.link }]);
-        setLongUrl("");
+                body: JSON.stringify({
+                    long_url: longURL,
+                    domain: "bit.ly",
+                    group_guid: `${process.env.REACT_APP_GUID}`,
+                }),
+            });
+            const data = await response.json();
+            const new_link = data.link.replace("https://", "");
+
+            const qrResponse = await fetch(
+                `https://api-ssl.bitly.com/v4/bitlinks/${new_link}/qr?image_format=png`,
+                {
+                    mode: "cors",
+                    headers: {
+                        Authorization: `Bearer ${process.env.REACT_APP_BITLY_TOKEN}`,
+                    },
+                }
+            );
+            const qrResult = await qrResponse.json();
+
+            setShortLink(qrResult);
+            setActive(true);
+            setShortLinks([...shortLinks, { longURL, shortLink: qrResult.link }]);
+            setLongUrl("");
+        } catch (error) {
+            console.error("Error while shortening link:", error);
+        }
     };
+
+    const handleCopy = (index) => {
+        const updatedIsCopied = Array(shortLinks.length).fill(false);
+        updatedIsCopied[index] = true;
+        setIsCopied(updatedIsCopied);
+        setCopiedIndex(index);
+    }
 
     return (
         <Container fluid className='p-0'>
@@ -106,23 +122,31 @@ const UrlShort = () => {
                 </Row>
             </Container>
             <Container className='mt-5'>
-                <Form onSubmit={handleSubmit} className='w-75 m-auto cs-bg-2 p-3 p-lg-5 rounded d-flex flex-column flex-lg-row gap-3'>
-                    <Form.Control
-                        placeholder='Shorten a link here...'
-                        className='cs-w'
-                        type='text'
-                        value={longURL}
-                        onChange={handleChange}
-                        />
-                    <Button type='submit' variant='custom' className='cs-w-2 rounded cs-btn text-white'>Shorten It!</Button>
+                <Form onSubmit={handleSubmit} className='w-75 m-auto cs-bg-2 p-3 p-lg-5 rounded gap-3'>
+                    <Row >
+                        <Col lg={9} xs={12} className='cs-col my-lg-0 my-2' ref={parentRef}>
+                            <Form.Control
+                                placeholder='Shorten a link here...'
+                                className='w-100 p-2'
+                                id='input-link'
+                                type='text'
+                                value={longURL}
+                                onChange={handleChange}
+                                />
+                            {isValidlink || longURL.trim() === '' ? null : <label for='input-link' className='text-danger cs-label'>Please add a link</label>}
+                        </Col>
+                        <Col lg={3} xs={12} className='my-lg-0 my-2'>
+                            <Button type='submit' variant='custom' className='w-100 rounded cs-btn text-white p-2'>Shorten It!</Button>
+                        </Col>
+                    </Row>
                 </Form>
                 <Container ref={parentRef}>
                     {shortLinks.map((link, index) => (
-                        <Container key={index} className='w-75 mx-auto rounded p-2 bg-white m-2 d-flex flex-row justify-content-between align-items-center'>
+                        <Container key={index} className='w-75 mx-auto rounded p-3 bg-white my-2 d-flex flex-lg-row flex-column justify-content-between align-items-center'>
                             <p className='m-0'>{link.longURL}</p>
                             <p className='m-0 ms-auto cs-tc-2'>{link.shortLink}</p>
-                            <CopyToClipboard text={link.shortLink} onCopy={() => {setCopy(true);}}>
-                                <Button variant='custom' className='ms-3 px-3 rounded cs-btn text-white'>Copy</Button>
+                            <CopyToClipboard text={link.shortLink} onCopy={() => handleCopy(index)}>
+                                <Button variant='custom' className={`ms-3 rounded cs-btn text-white ${isCopied[index] ? 'cs-btn-cop' : 'cs-btn'}`}>{isCopied[index] ? 'Copied!' : 'Copy'}</Button>
                             </CopyToClipboard>
                         </Container>
                     ))}

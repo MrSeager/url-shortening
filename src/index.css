@@ -21,6 +21,10 @@ code {
   background-color: hsl(180, 66%, 69%) !important;
 }
 
+.cs-btn-cop{
+  background-color: hsl(257, 27%, 26%) !important;
+}
+
 .cs-tc{
   color: hsl(0, 0%, 75%) !important;
 }
@@ -107,6 +111,10 @@ nav .cs-tc:hover{
 .cs-soc:hover{
   filter: brightness(0) saturate(100%) invert(86%) sepia(45%) saturate(1166%) hue-rotate(135deg) brightness(85%) contrast(89%);
   transition: .3s;
+}
+
+.cs-label{
+  position: static;
 }
 
 @media (max-width: 991px)
