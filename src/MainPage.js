@@ -96,7 +96,7 @@ const UrlShort = () => {
             <Navbar collapseOnSelect expand="lg" className="bg-transparent mt-3 mx-5">
                 <Navbar.Brand><Image fluid src={ImgLogo} alt='logo' /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse className='cs-bg rounded'>
+                <Navbar.Collapse className='cs-bg rounded py-3 py-lg-0'>
                     <Nav className='me-auto align-items-center pb-3 pb-lg-0'>
                         <Nav.Link className='cs-tc cs-fw m-1'>Features</Nav.Link>
                         <Nav.Link className='cs-tc cs-fw m-1'>Pricing</Nav.Link>
@@ -108,7 +108,7 @@ const UrlShort = () => {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <Container fluid className='mt-5'>
+            <Container fluid className='mt-5 cs-bg-5 py-5 py-lg-2'>
                 <Row className='ms-4'>
                     <Col lg={{ order: 1, span: 6 }} xs={{ order: 2, span: 12 }} className='d-flex flex-column justify-content-center'>
                         <h1 className='display-1 cs-fw text-center text-lg-start'>More than just shorter links</h1>
@@ -122,8 +122,8 @@ const UrlShort = () => {
                 </Row>
             </Container>
             <Container className='mt-5'>
-                <Form onSubmit={handleSubmit} className='w-75 m-auto cs-bg-2 p-3 p-lg-5 rounded gap-3'>
-                    <Row >
+                <Form onSubmit={handleSubmit} className='cs-el-w m-auto cs-bg-2 p-3 p-lg-5 rounded gap-3'>
+                    <Row>
                         <Col lg={9} xs={12} className='cs-col my-lg-0 my-2' ref={parentRef}>
                             <Form.Control
                                 placeholder='Shorten a link here...'
@@ -140,13 +140,13 @@ const UrlShort = () => {
                         </Col>
                     </Row>
                 </Form>
-                <Container ref={parentRef}>
+                <Container className='cs-el-w p-0' ref={parentRef}>
                     {shortLinks.map((link, index) => (
-                        <Container key={index} className='w-75 mx-auto rounded p-3 bg-white my-2 d-flex flex-lg-row flex-column justify-content-between align-items-center'>
-                            <p className='m-0'>{link.longURL}</p>
-                            <p className='m-0 ms-auto cs-tc-2'>{link.shortLink}</p>
+                        <Container key={index} className='rounded p-3 bg-white my-2 d-flex flex-lg-row flex-column justify-content-between align-items-start align-items-lg-center'>
+                            <p className='m-0 cs-link-br cs-w pb-3 pb-lg-0'>{link.longURL}</p>
+                            <p className='m-0 ms-0 ms-lg-auto cs-tc-2 py-3 py-lg-0'>{link.shortLink}</p>
                             <CopyToClipboard text={link.shortLink} onCopy={() => handleCopy(index)}>
-                                <Button variant='custom' className={`ms-3 rounded cs-btn text-white ${isCopied[index] ? 'cs-btn-cop' : 'cs-btn'}`}>{isCopied[index] ? 'Copied!' : 'Copy'}</Button>
+                                <Button variant='custom' className={`cs-btn-w ms-0 ms-lg-3 rounded cs-btn text-white cs-btn${isCopied[index] ? '-cop' : ''}`}>{isCopied[index] ? 'Copied!' : 'Copy'}</Button>
                             </CopyToClipboard>
                         </Container>
                     ))}
@@ -200,11 +200,11 @@ const UrlShort = () => {
                 <Button variant='custom' className='rounded-pill cs-btn text-white px-4'>Get Started</Button>
             </Container>
             <Container fluid className='cs-bg-4 p-3 p-lg-5'>
-                <Row  className="g-2">
+                <Row  className="g-3">
                     <Col lg={3} xs={12} className='d-flex d-lg-block justify-content-center'>
                         <Image fluid src={ImgLogo} alt="logo" className='cs-img' />
                     </Col>
-                    <Col lg={2} xs={12}>
+                    <Col lg={2} xs={12} className='mt-lg-0 mt-4'>
                         <Nav className="flex-column align-items-center align-items-lg-start">
                             <Nav.Link className='cs-link text-white cs-fw mb-2'>Features</Nav.Link>
                             <Nav.Link className='cs-link cs-tc pb-0'>Link Shortening</Nav.Link>
@@ -212,7 +212,7 @@ const UrlShort = () => {
                             <Nav.Link className='cs-link cs-tc pb-0'>Analytics</Nav.Link>
                         </Nav>
                     </Col>
-                    <Col lg={2} xs={12}>
+                    <Col lg={2} xs={12} className='mt-lg-0 mt-4'>
                         <Nav className="flex-column align-items-center align-items-lg-start">
                             <Nav.Link className='cs-link text-white cs-fw mb-2'>Resources</Nav.Link>
                             <Nav.Link className='cs-link cs-tc pb-0'>Blog</Nav.Link>
@@ -220,7 +220,7 @@ const UrlShort = () => {
                             <Nav.Link className='cs-link cs-tc pb-0'>Support</Nav.Link>
                         </Nav>
                     </Col>
-                    <Col lg={2} xs={12}>
+                    <Col lg={2} xs={12} className='mt-lg-0 mt-4'>
                         <Nav className="flex-column align-items-center align-items-lg-start">
                             <Nav.Link className='cs-link text-white cs-fw mb-2'>Company</Nav.Link>
                             <Nav.Link className='cs-link cs-tc pb-0'>About</Nav.Link>
@@ -229,7 +229,7 @@ const UrlShort = () => {
                             <Nav.Link className='cs-link cs-tc pb-0'>Contact</Nav.Link>
                         </Nav>
                     </Col>
-                    <Col lg={3} xs={12}>
+                    <Col lg={3} xs={12} className='mt-lg-0 mt-4'>
                         <Nav className="flex-row justify-content-center">
                             <Nav.Link className='p-2'><Image src={ImgFB} alt='facebook' className='cs-soc' /></Nav.Link>
                             <Nav.Link className='p-2'><Image src={ImgTW} alt='twitter' className='cs-soc' /></Nav.Link>

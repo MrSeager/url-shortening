@@ -5,7 +5,7 @@ body {
   font-family: 'Poppins', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 38%, rgba(241,239,246,1) 38%);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 100vh, rgba(241,239,246,1) 100vh);
 }
 
 code {
@@ -63,6 +63,10 @@ nav .cs-tc:hover{
   background-color: hsl(260, 8%, 14%);
 }
 
+.cs-bg-5{
+  background-color: white;
+}
+
 .cs-card{
   position: relative;
 }
@@ -100,6 +104,10 @@ nav .cs-tc:hover{
   width: 25% !important;
 }
 
+.cs-btn-w{
+  width: 15% !important;
+}
+
 .cs-img{
   filter: brightness(0) saturate(100%) invert(100%) sepia(81%) saturate(631%) hue-rotate(247deg) brightness(125%) contrast(100%);
 }
@@ -117,8 +125,16 @@ nav .cs-tc:hover{
   position: static;
 }
 
+.cs-el-w{
+  width: 75% !important;
+}
+
 @media (max-width: 991px)
 {
+  body{
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 265vh, rgba(241,239,246,1) 265vh);
+  }
+  
   .cs-bg{
     background-color: hsl(257, 27%, 26%) !important;
   }
@@ -150,11 +166,10 @@ nav .cs-tc:hover{
     left: 50%;
   }
 
-  .cs-w{
-    width: 100% !important;
-  }
-
-  .cs-w-2{
+  .cs-w,
+  .cs-w-2,
+  .cs-btn-w
+  {
     width: 100% !important;
   }
   
@@ -166,5 +181,26 @@ nav .cs-tc:hover{
   .cs-bg-3{
     background: url('./images/bg-boost-mobile.svg') no-repeat center / 100% 100%;
     background-color: hsl(257, 27%, 26%);
+  }
+
+  .cs-el-w{
+    width: 90% !important;
+  }
+
+  .cs-link-br{
+    border-bottom: solid 1px hsl(257, 27%, 26%);
+  }
+
+  .navbar-collapse {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #fff; /* Customize the background color */
+    z-index: 1000; /* Ensure it's above other content */
+  }
+
+  .menu-open .container {
+    padding-top: 60px; /* Adjust the value to match your menu height */
   }
 }
