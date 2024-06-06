@@ -93,7 +93,7 @@ const UrlShort = () => {
 
     return (
         <Container fluid className='p-0'>
-            <Navbar collapseOnSelect expand="lg" className="bg-transparent mt-3 mx-5">
+            <Navbar collapseOnSelect expand="lg" className="bg-transparent mt-3 mx-5 px-5">
                 <Navbar.Brand><Image fluid src={ImgLogo} alt='logo' /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse className='cs-bg rounded py-3 py-lg-0'>
@@ -108,7 +108,7 @@ const UrlShort = () => {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <Container fluid className='mt-5 cs-bg-5 py-5 py-lg-2'>
+            <Container fluid className='mt-5 px-5 py-5 py-lg-2 cs-bg-main'>
                 <Row className='ms-4'>
                     <Col lg={{ order: 1, span: 6 }} xs={{ order: 2, span: 12 }} className='d-flex flex-column justify-content-center'>
                         <h1 className='display-1 cs-fw text-center text-lg-start'>More than just shorter links</h1>
@@ -121,7 +121,7 @@ const UrlShort = () => {
                     </Col>
                 </Row>
             </Container>
-            <Container className='mt-5'>
+            <Container fluid className='mt-5'>
                 <Form onSubmit={handleSubmit} className='cs-el-w m-auto cs-bg-2 p-3 p-lg-5 rounded gap-3'>
                     <Row>
                         <Col lg={9} xs={12} className='cs-col my-lg-0 my-2' ref={parentRef}>
@@ -200,7 +200,7 @@ const UrlShort = () => {
                 <Button variant='custom' className='rounded-pill cs-btn text-white px-4'>Get Started</Button>
             </Container>
             <Container fluid className='cs-bg-4 p-3 p-lg-5'>
-                <Row  className="g-3">
+                <Row  className="g-3 mx-5">
                     <Col lg={3} xs={12} className='d-flex d-lg-block justify-content-center'>
                         <Image fluid src={ImgLogo} alt="logo" className='cs-img' />
                     </Col>

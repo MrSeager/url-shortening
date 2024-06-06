@@ -5,7 +5,23 @@ body {
   font-family: 'Poppins', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 100vh, rgba(241,239,246,1) 100vh);
+  background-color: #f0f1f6 !important;
+
+}
+
+.cs-bg-main{
+  position: relative;
+}
+
+.cs-bg-main::before{
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -100%;
+  bottom: -25%;
+  background-color: rgba(255,255,255,1);
+  z-index: -2;
 }
 
 code {
@@ -130,11 +146,7 @@ nav .cs-tc:hover{
 }
 
 @media (max-width: 991px)
-{
-  body{
-    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 265vh, rgba(241,239,246,1) 265vh);
-  }
-  
+{  
   .cs-bg{
     background-color: hsl(257, 27%, 26%) !important;
   }
@@ -202,5 +214,16 @@ nav .cs-tc:hover{
 
   .menu-open .container {
     padding-top: 60px; /* Adjust the value to match your menu height */
+  }
+
+  .cs-bg-main::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -100%;
+    bottom: -15%;
+    background-color: rgba(255,255,255,1);
+    z-index: -2;
   }
 }
